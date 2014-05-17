@@ -38,7 +38,7 @@ function onDisconnected() {
 }
 
 function connect() {
-  var hostName = "com.andrewhallagan.vimstayfresh";
+  var hostName = "org.vim.stayfresh";
   appendMessage("Connecting to native messaging host <b>" + hostName + "</b>")
   port = chrome.runtime.connectNative(hostName);
   port.onMessage.addListener(onNativeMessage);
