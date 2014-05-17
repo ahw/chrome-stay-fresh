@@ -1,0 +1,36 @@
+{
+  "name": "Stay Fresh",
+  "manifest_version": 2,
+  "version": "0.1",
+  "description": "Reacts to Vim events and does stuff in Chrome.",
+  
+  "browser_action": {
+    "default_icon": "vim-16.png",
+    "default_title": "Vim Stay Fresh",
+    "default_popup": "index.html"
+  },
+
+  // "background": {
+  //   "persistant": true,
+  //   "scripts": [
+  //     "/common/js/jquery.js",
+  //     "/background/search-omnibar.js",
+  //     "/background/app.js"
+  //   ]
+  // },
+
+  "icons": {
+    "16": "/vim-16.png",
+    "48": "/vim-48.png",
+    "128": "/vim-128.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "*://*/*",
+    "*://localhost/*",
+    "nativeMessaging"
+  ]
+
+  // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+}
