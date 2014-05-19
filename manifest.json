@@ -7,17 +7,15 @@
   "browser_action": {
     "default_icon": "vim-16.png",
     "default_title": "Vim Stay Fresh",
-    "default_popup": "index.html"
+    "default_popup": "popup.html"
   },
 
-  // "background": {
-  //   "persistant": true,
-  //   "scripts": [
-  //     "/common/js/jquery.js",
-  //     "/background/search-omnibar.js",
-  //     "/background/app.js"
-  //   ]
-  // },
+  "background": {
+    "persistant": false,
+    "scripts": [
+      "/main-background.js"
+    ]
+  },
 
   "icons": {
     "16": "/vim-16.png",

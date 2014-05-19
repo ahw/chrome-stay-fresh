@@ -11,20 +11,20 @@ var app = Express();
 app.use(HTTP_LOG);
 Http.createServer(app).listen(7700);
 
-app.get('/', function(request, response) {
-    response.send('yay');
+app.get('/:eventName', function(request, response) {
+
+    // On an HTTP request, write stuff to stdout to communicate with Chrome.
+    var outputMessage = JSON.stringify(request.params.eventName);
+    var buf = new Buffer(4); // 32 bits.
+    buf.writeInt32LE(outputMessage.length, 0); // Use writeInt32BE if you're running on a big-endian architecture.
+
+    process.stdout.write(buf);
+    process.stdout.write(outputMessage);
+    // response.json(JSON.parse(outputMessage));
+    response.send(outputMessage);
+    LOG.info('Sent message: ' + buf + outputMessage);
 });
 LOG.info('Listening on port 7700');
-
-var buf = new Buffer(4); // 32 bits.
-var outputMessage = '{"success":"yay"}'; // Length: 17.
-// Least significant digits go in the "littlest" address in a little-endian
-// architecture, which is what my laptop is running on (x86). Reverse this
-// if you're running on a big-endian architecture.
-buf[0] = 0x11; // 17 in hex.
-buf[1] = 0x00;
-buf[2] = 0x00;
-buf[3] = 0x00;
 
 process.stdin.on('readable', function() {
     // Read input as UTF-8 strings. Note the first 4 bytes contain the
@@ -42,10 +42,6 @@ process.stdin.on('readable', function() {
     //     chunk - process.stdin.read();
     // }
     LOG.info(message);
-
-    process.stdout.write(buf);
-    process.stdout.write(outputMessage);
-    LOG.info('Sent message: ' + buf + outputMessage);
 });
 
 process.stdin.on('end', function() {

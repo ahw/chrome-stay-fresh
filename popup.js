@@ -1,7 +1,3 @@
-// Copyright 2013 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 var port = null;
 
 function appendMessage(text) {
@@ -47,10 +43,16 @@ function connect() {
   updateUiState();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('connect-button').addEventListener(
-      'click', connect);
-  document.getElementById('send-message-button').addEventListener(
-      'click', sendNativeMessage);
-  updateUiState();
-});
+function sendMessage(message) {
+    var port = chrome.runtime.sendMessage(message, function(response) {
+        console.log('Sent message', message, 'and got response', response);
+    });
+}
+
+// document.addEventListener('DOMContentLoaded', function () {
+//   document.getElementById('start').addEventListener('click', startListening);
+//   document.getElementById('stop').addEventListener('click', stopListening);
+// });
+
+document.getElementById('start').addEventListener('click', sendMessage.bind(this, 'start'));
+document.getElementById('stop').addEventListener('click', sendMessage.bind(this, 'stop'));
