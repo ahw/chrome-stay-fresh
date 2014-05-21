@@ -5,22 +5,22 @@
   "description": "Reacts to Vim events and does stuff in Chrome.",
   
   "browser_action": {
-    "default_icon": "/extension/vim-16.png",
+    "default_icon": "/vim-16.png",
     "default_title": "Vim Stay Fresh",
-    "default_popup": "/extension/popup.html"
+    "default_popup": "/popup.html"
   },
 
   "background": {
     "persistant": false,
     "scripts": [
-      "/extension/main-background.js"
+      "/main-background.js"
     ]
   },
 
   "icons": {
-    "16": "/extension/vim-16.png",
-    "48": "/extension/vim-48.png",
-    "128": "/extension/vim-128.png"
+    "16": "/vim-16.png",
+    "48": "/vim-48.png",
+    "128": "/vim-128.png"
   },
 
   // TODO: Which of these are actually needed?

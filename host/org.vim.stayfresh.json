@@ -1,1 +1,9 @@
-/Users/andrew/Library/Application Support/Google/Chrome/NativeMessagingHosts/org.vim.stayfresh.json
+{
+  "name": "org.vim.stayfresh",
+  "description": "Reacts to Vim events and refreshes Chrome accordingly.",
+  "path": "/Users/andrew/StayFresh/host/stay-fresh-listener.js",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://bemfhbphlohohionfafdpjjlgkhkicee/"
+  ]
+}

@@ -2,7 +2,7 @@
   "name": "StayFresh",
   "version": "0.0.0",
   "description": "HTTP server that listens for Vim events and communicates with Chrome via the Native Messaging API.",
-  "main": "host/stay-fresh-listener.js",
+  "main": "stay-fresh-listener.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
