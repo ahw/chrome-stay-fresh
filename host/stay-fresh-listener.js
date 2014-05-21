@@ -22,9 +22,11 @@ app.get('/:eventName', function(request, response) {
     process.stdout.write(outputMessage);
     // response.json(JSON.parse(outputMessage));
     response.send(outputMessage);
-    LOG.info('Sent message: ' + buf + outputMessage);
+    LOG.info('Sent message on stdout: ' + buf + outputMessage);
 });
-LOG.info('Listening on port 7700');
+LOG.info('Starting up StayFresh listener.');
+LOG.info('Listening to HTTP/1.1 on port 7700');
+LOG.info('Talking to Chrome extension on stdin/stdout');
 
 process.stdin.on('readable', function() {
     // Read input as UTF-8 strings. Note the first 4 bytes contain the
@@ -33,7 +35,6 @@ process.stdin.on('readable', function() {
     process.stdin.setEncoding('utf8');
     var chunk = process.stdin.read(4); // Read the first 4 bytes to get length
     var length = new Buffer(chunk).readUInt32LE(0); // Convert to integer
-    LOG.info('Received message of ' + length + ' bytes');
 
     // TODO: What if we don't have all the data yet?
     var message = process.stdin.read(length);
@@ -41,13 +42,11 @@ process.stdin.on('readable', function() {
     //     message += chunk;
     //     chunk - process.stdin.read();
     // }
-    LOG.info(message);
+    LOG.info('Received message of ' + length + ' bytes on stdin: ' + message);
 });
 
 process.stdin.on('end', function() {
-    LOG.info('Got "end" event');
-});
-
-process.stdin.on('close', function() {
-    LOG.info('Got "close" event');
+    // Note: "close" is not guaranteed to fire. The "end" event will.
+    LOG.info('Got "end" event on stdin. Exiting.');
+    process.exit(0); // Exit successfully.
 });
