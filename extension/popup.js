@@ -61,6 +61,6 @@ function sendMessage(message) {
     });
 }
 
-sendMessage('toggle');
+sendMessage('start');
 document.getElementById('start').addEventListener('click', sendMessage.bind(this, 'start'));
 document.getElementById('stop').addEventListener('click', sendMessage.bind(this, 'stop'));

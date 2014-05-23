@@ -12,27 +12,26 @@
             }
             body {
                 font-family: "nyt-cheltenham";
-                font-family:"Helvetica";
-                background:#FF00AD;
-                color:white;
+                background:white;
+                color:black;
+                width:300px;
             }
             button {
-                padding:6px;
-                font-family:"Helvetica";
-                border:1px solid white;
-                color:white;
-                background:transparent;
+                padding:15px;
+                border-radius:4px;
+                font-family: "nyt-cheltenham";
+                color:black;
+                background:#eee;
+                border:0;
                 font-size:medium;
-                border:1px solid white;
             }
             button:hover {
-                background:white;
-                color:#FF00AD;
+                background:#fafafa;
+                color:black;
                 cursor:pointer;
             }
             button:active {
                 background:yellow;
-                border:1px solid yellow;
                 color:green;
             }
             button:focus {
@@ -44,7 +43,7 @@
         </style>
     </head>
     <body>
-        <h1>VIM STAY FRESH</h1>
+        <h1>Vim Stay Fresh</h1>
         <button id='start'>Start</button>
         <button id='stop'>Stop</button>
         <p>Currently <span id="negative">not</span> listening</p>
