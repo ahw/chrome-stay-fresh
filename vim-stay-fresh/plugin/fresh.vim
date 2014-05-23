@@ -17,4 +17,6 @@ aug RefreshGroup
     au!
     "TODO: Call this function with the event name as arg
     au BufWritePost * call SendRefreshRequest()
+    au CursorHold * call SendRefreshRequest()
+    au CursorHoldI * call SendRefreshRequest()
 aug END

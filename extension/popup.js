@@ -45,22 +45,22 @@ function connect() {
 
 function sendMessage(message) {
     console.log('sending message...');
-    document.getElementById('random').innerHTML = (new Date());
     chrome.tabs.query({active:true, currentWindow: true}, function(tabs) {
         var tabId = tabs[0].id;
         chrome.runtime.sendMessage({
             tabId: tabId,
             action: message
         }, function(response) {
-            console.log('Sent message', message, 'and got response', response);
+            console.log('Got response', response);
+            if (response === 'listening') {
+                document.getElementById('negative').style.display = 'none';
+            } else {
+                document.getElementById('negative').style.display = 'inline';
+            }
         });
     });
 }
 
-// document.addEventListener('DOMContentLoaded', function () {
-//     document.getElementById('start').addEventListener('click', startListening);
-//     document.getElementById('stop').addEventListener('click', stopListening);
-// });
-
+sendMessage('toggle');
 document.getElementById('start').addEventListener('click', sendMessage.bind(this, 'start'));
 document.getElementById('stop').addEventListener('click', sendMessage.bind(this, 'stop'));

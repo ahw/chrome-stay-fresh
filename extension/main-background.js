@@ -1,17 +1,31 @@
 var listeningTabIds = {};
 
+function stopListening(tabId, callback) {
+    delete listeningTabIds[tabId];
+    console.log('Will stop automatically reloading tab', tabId);
+    callback('not listening');
+}
+
+function startListening(tabId, callback) {
+    listeningTabIds[tabId] = tabId;
+    console.log('Will start reloading tab', tabId, 'on relevant Vim events.');
+    callback('listening');
+}
+
 // Event Page Messaging
 chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
     console.log('Event page got message from popup', request);
-    sendNativeMessage('Will ' + request + ' for messages from tab id ' + request.tabId);
-    if (request.action === "start") {
-        listeningTabIds[request.tabId] = request.tabId;
-        sendResponse('Will start reloading tab ' + request.tabId + ' on relevant Vim events.');
-        console.log('Will start reloading tab', request.tabId, 'on relevant Vim events.');
+    sendNativeMessage('Will ' + request.action + ' for messages from tab id ' + request.tabId);
+    if (request.action === 'toggle') {
+        if (listeningTabIds[request.tabId]) {
+            stopListening(request.tabId, sendResponse);
+        } else {
+            startListening(request.tabId, sendResponse);
+        }
+    } else if (request.action === "start") {
+        startListening(request.tabId, sendResponse);
     } else if (request.action === 'stop') {
-        delete listeningTabIds[request.tabId];
-        sendResponse('Will stop automatically reloading tab ' + request.tabId);
-        console.log('Will stop automatically reloading tab', request.tabId);
+        stopListening(request.tabId, sendResponse);
     }
 });
 
