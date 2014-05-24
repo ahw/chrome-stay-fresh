@@ -57,9 +57,13 @@ chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     // This gets fired twice, first where changeInfo.status is "loading" and
     // the second when changeInfo.status is "complete". We only need to
     // react to the first.
-    if (changeInfo.status === 'loading' && listeningTabIds[tabId]) {
+    if (changeInfo.url) {
+        // In this case, the user went to a new URL in the same tab. We
+        // should stop listening.
+        stopListening(tabId);
+    } else if (changeInfo.status === 'loading' && listeningTabIds[tabId]) {
         console.log('user refreshed a listened-for tab');
-        changeToActiveIcon(tabId);
+        startListening(tabId);
     }
 });
 
@@ -81,8 +85,7 @@ function onNativeMessage(eventName) {
                     // icon if so. We probably are still listening, but
                     // currently manual user refreshes aren't handled.
                     if (listeningTabIds[tabId]) {
-                        console.log('tab has reloaded; changing icon');
-                        changeToActiveIcon(tabId);
+                        startListening(tabId);
                     }
                 });
             });
