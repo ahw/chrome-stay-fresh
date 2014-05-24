@@ -1,11 +1,13 @@
-function! SendRefreshRequest(...)
+function! SendRefreshRequest(eventName)
     let fileName = getreg('%')
     let urlEncodedFileName = substitute(fileName, '/', '%2F', 'g')
     let vimEscapedFileName = substitute(urlEncodedFileName, '%', '\\%', 'g')
-    let eventName = a:0
-    "Make request to the server
-    "TODO: Don't hard-code the event name.
-    let curlRequest = '"http://localhost:7700/BufWritePost?filename=' . vimEscapedFileName . '"'
+    "Make request to the server with the event name and the filename. Not
+    "really using the filename at this point, but in the future it might
+    "come in handy. We're also not bothing with anything other than the
+    "BufWritePost event, but it's nice to keep in general for now in case we
+    "want start listening for other events in the future.
+    let curlRequest = '"http://localhost:7700/' . a:eventName . '?filename=' . vimEscapedFileName . '"'
     execute 'silent !curl ' . curlRequest
     "Clear and redraw the screen
     redraw!
@@ -15,6 +17,5 @@ endfunction
 aug RefreshGroup
     "Clear the RefreshGroup augroup. Otherwise Vim will combine them.
     au!
-    "TODO: Call this function with the event name as arg
-    au BufWritePost * call SendRefreshRequest()
+    au BufWritePost * call SendRefreshRequest('BufWritePost')
 aug END

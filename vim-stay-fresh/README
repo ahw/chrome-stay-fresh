@@ -1,0 +1,18 @@
+Vim Stay Fresh
+--------------
+
+1. I recommend installing the Vim plugin with Pathogen.
+2. Install the Chrome extension.
+
+Local Use
+=========
+1. The Vim plugin just makes a request to *localhost:7700*, which the Chrome
+   extension is listening to. In other words, not further set up is
+   required. Click the extension's icon in the browser toolbar.
+
+Remote Use (SSH)
+================
+1. `ssh your.server.com -R 7700:localhost:7700`
+2. The above command will forward all requests made to port 7700 on
+   *your.server.com* to your SSH client machine, which will then just
+   forward that request to the _client's_ *localhost:7700*.
