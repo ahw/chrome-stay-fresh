@@ -75,7 +75,7 @@ function sendNativeMessage(message) {
 function onNativeMessage(eventName) {
     console.log('Event page got native message from host:', eventName);
     switch (eventName) {
-        case 'BufWritePost':
+        case 'reload':
             Object.keys(listeningTabIds).forEach(function(tabId) {
                 tabId = parseInt(tabId);
                 console.log('Found listening tab id', tabId);
