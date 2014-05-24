@@ -10,8 +10,8 @@ function changeToActiveIcon(tabId) {
 
     chrome.browserAction.setIcon({
         path: {
-            19: 'v-pink-19.png',
-            38: 'v-pink-38.png'
+            19: '/images/v-pink-19.png',
+            38: '/images/v-pink-38.png'
         },
         tabId: tabId
     });
@@ -26,8 +26,8 @@ function changeToInactiveIcon(tabId) {
 
     chrome.browserAction.setIcon({
         path: {
-            19: 'v-white-19.png',
-            38: 'v-white-38.png'
+            19: '/images/v-white-19.png',
+            38: '/images/v-white-38.png'
         },
         tabId: tabId
     });
