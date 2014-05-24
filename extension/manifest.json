@@ -5,9 +5,8 @@
   "description": "Reacts to Vim events and does stuff in Chrome.",
   
   "browser_action": {
-    "default_icon": "/vim-16.png",
-    "default_title": "Vim Stay Fresh",
-    "default_popup": "/popup.html"
+    "default_icon": "/vim-38.png",
+    "default_title": "Vim Stay Fresh"
   },
 
   "background": {
@@ -19,6 +18,8 @@
 
   "icons": {
     "16": "/vim-16.png",
+    "19": "/vim-19.png",
+    "38": "/vim-38.png",
     "48": "/vim-48.png",
     "128": "/vim-128.png"
   },
