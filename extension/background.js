@@ -10,8 +10,8 @@ function changeToActiveIcon(tabId) {
 
     chrome.browserAction.setIcon({
         path: {
-            19: 'vim-19-pink.png',
-            38: 'vim-38-pink.png'
+            19: 'vim-logo-pink-shadow-19.png',
+            38: 'vim-logo-pink-shadow-38.png'
         },
         tabId: tabId
     });
@@ -26,8 +26,8 @@ function changeToInactiveIcon(tabId) {
 
     chrome.browserAction.setIcon({
         path: {
-            19: 'vim-19.png',
-            38: 'vim-38.png'
+            19: 'vim-logo-green-shadow-19.png',
+            38: 'vim-logo-green-shadow-38.png'
         },
         tabId: tabId
     });
