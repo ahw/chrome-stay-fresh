@@ -12,7 +12,7 @@
   "background": {
     "persistant": false,
     "scripts": [
-      "/main-background.js"
+      "/background.js"
     ]
   },
 
@@ -24,14 +24,8 @@
     "128": "/vim-128.png"
   },
 
-  // TODO: Which of these are actually needed?
   "permissions": [
     "tabs",
-    "*://*/*",
-    "*://localhost/*",
     "nativeMessaging"
   ]
-
-  // TODO: remove this.
-  // "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
 }
