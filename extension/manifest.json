@@ -17,7 +17,9 @@
   },
 
   "icons": {
-    "128": "/images/v-pink-128.png"
+    "128": "/images/v-pink-128.png",
+    "48": "/images/v-pink-48.png",
+    "16": "/images/v-pink-16.png"
   },
 
   "permissions": [

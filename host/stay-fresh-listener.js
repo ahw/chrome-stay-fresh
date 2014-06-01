@@ -13,16 +13,28 @@ Http.createServer(app).listen(7700);
 
 app.get('/:eventName', function(request, response) {
 
+    var delay = request.query.delay;
     // On an HTTP request, write stuff to stdout to communicate with Chrome.
     var outputMessage = JSON.stringify(request.params.eventName);
     var buf = new Buffer(4); // 32 bits.
     buf.writeInt32LE(outputMessage.length, 0); // Use writeInt32BE if you're running on a big-endian architecture.
 
-    process.stdout.write(buf);
-    process.stdout.write(outputMessage);
-    // response.json(JSON.parse(outputMessage));
+    function sendMessageToChrome() {
+        process.stdout.write(buf);
+        process.stdout.write(outputMessage);
+        LOG.info('Sent message on stdout: ' + buf + outputMessage);
+    }
+
+    if (delay) {
+        LOG.info('Delaying for', delay, 'milliseconds');
+        setTimeout(sendMessageToChrome, delay);
+    } else {
+        sendMessageToChrome();
+    }
+
+
+    // Return a response immediately
     response.send(outputMessage);
-    LOG.info('Sent message on stdout: ' + buf + outputMessage);
 });
 LOG.info('Starting up StayFresh listener.');
 LOG.info('Listening to HTTP/1.1 on port 7700');
