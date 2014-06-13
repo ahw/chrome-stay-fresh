@@ -62,3 +62,12 @@ process.stdin.on('end', function() {
     LOG.info('Got "end" event on stdin. Exiting.');
     process.exit(0); // Exit successfully.
 });
+
+process.on('exit', function(code) {
+    console.log('Process exiting with code', code);
+    LOG.info('Process exiting with code', code);
+});
+
+process.on('uncaughtException', function(error) {
+    console.error('Process got uncaughtException', error);
+});
