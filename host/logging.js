@@ -5,7 +5,7 @@ var loggerConfig = {
     name: 'stayfresh',
     streams: [{
         type: 'rotating-file',
-        path: __dirname + '/../log/stayfresh.log',
+        path: __dirname + '/stayfresh.log',
         count: 7,
         period: '1d' // Others: 1h, 1w, 1m, 1y. See https://github.com/trentm/node-bunyan#stream-type-rotating-file
     }],

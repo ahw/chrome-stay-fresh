@@ -5,21 +5,21 @@
   "description": "Reacts to Vim events and does stuff in Chrome.",
   
   "browser_action": {
-    "default_icon": "images/v-white-38.png",
+    "default_icon": "extension/images/v-white-38.png",
     "default_title": "Vim Stay Fresh"
   },
 
   "background": {
     "persistant": false,
     "scripts": [
-      "/background.js"
+      "extension/background.js"
     ]
   },
 
   "icons": {
-    "128": "images/v-pink-128.png",
-    "48": "images/v-pink-48.png",
-    "16": "images/v-pink-16.png"
+    "128": "extension/images/v-pink-128.png",
+    "48": "extension/images/v-pink-48.png",
+    "16": "extension/images/v-pink-16.png"
   },
 
   "permissions": [

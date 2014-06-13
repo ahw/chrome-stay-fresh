@@ -1,5 +1,39 @@
-# Copy the native messaging host manifest to the right spot.
-cp host/org.vim.stayfresh.json ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts
+#!/bin/sh
+# Location of the manifest file depends on the platform:
+# Source: https://developer.chrome.com/extensions/messaging#native-messaging-host
 
+# Windows
+# -------
+# The manifest file can be located anywhere in the file system. The application
+# installer must create one of the following registry keys
+#   - HKEY_LOCAL_MACHINE\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.my_company.my_application
+#   - HKEY_CURRENT_USER\SOFTWARE\Google\Chrome\NativeMessagingHosts\com.my_company.my_application
+# and set default value of that key to the full path to the manifest file.  #
+
+# OSX
+# ---
+# The manifest file must be placed at either
+#   - /Library/Google/Chrome/NativeMessagingHosts/com.my_company.my_application.json
+#   - ~/Library/Application Support/Google/Chrome/NativeMessagingHosts/com.my_company.my_application.json
+
+# Linux
+# -----
+# The manifest file must be placed at either
+#   - /etc/opt/chrome/native-messaging-hosts/com.my_company.my_application.json
+#   - ~/.config/google-chrome/NativeMessagingHosts/com.my_company.my_application.json
+
+CURRENT=`pwd`
+# NPM-install all the necessary node modules for the host script.
+echo "Installing npm  modules for listener script"
 cd host
 npm install
+
+# Change back to the root dir
+cd ${CURRENT}
+MANIFEST_FILENAME="org.vim.stayfresh.json"
+# Copy the manifest file to the right place on OSX. Change the placeholder text to the correct path.
+# TODO: Install in different locations depending on host OS.
+sed "s|PATH_TO_EXTENSION|${CURRENT}|" host/${MANIFEST_FILENAME} > ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/${MANIFEST_FILENAME}
+echo "Copying native messaging host manifest to ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/${MANIFEST_FILENAME}"
+# Cat it out for confirmation.
+cat ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts/${MANIFEST_FILENAME}
