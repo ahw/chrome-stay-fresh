@@ -1,0 +1,5 @@
+# Copy the native messaging host manifest to the right spot.
+cp host/org.vim.stayfresh.json ~/Library/Application\ Support/Google/Chrome/NativeMessagingHosts
+
+cd host
+npm install
