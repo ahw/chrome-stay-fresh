@@ -1,4 +1,5 @@
 var listeningTabIds = {};
+var exactMatchTabIds = {};
 var port = null; // This is the port used to communicate to the native host
 
 function changeToActiveIcon(tabId) {
@@ -34,30 +35,49 @@ function changeToInactiveIcon(tabId) {
 }
 
 function stopListening(tabId) {
+    if (typeof tabId === "undefined") {
+        // If programmer forgot to pass the tabId, return early.
+        console.warn('Must pass a tabId to stopListening');
+        return;
+    }
     delete listeningTabIds[tabId];
     changeToInactiveIcon(tabId);
     console.log('Will stop automatically reloading tab', tabId);
 }
 
 function startListening(tabId) {
+    if (typeof tabId === "undefined") {
+        // If programmer forgot to pass the tabId, return early.
+        console.warn('Must pass a tabId to startListening');
+        return;
+    }
     listeningTabIds[tabId] = tabId;
     changeToActiveIcon(tabId);
     console.log('Will start reloading tab', tabId, 'on relevant Vim events.');
 }
 
-chrome.browserAction.onClicked.addListener(function(tab) {
-    if (listeningTabIds[tab.id]) {
-        stopListening(tab.id);
-    } else {
-        startListening(tab.id);
-    }
+chrome.runtime.onMessage.addListener(function(message, sender, callback) {
+    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
+        var tabId = tabs[0].id;
+        if (message.action === 'toggle-listen') {
+            if (listeningTabIds[tabId]) {
+                stopListening(tabId);
+            } else {
+                startListening(tabId);
+            }
+        } else if (message.action === 'toggle-url-matching') {
+            exactMatchTabIds[tabId] = !exactMatchTabIds[tabId];
+            console.log('Will', exactMatchTabIds[tabId] ? 'start' : 'stop', 'reloading only when URL is the same');
+        }
+    });
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     // This gets fired twice, first where changeInfo.status is "loading" and
     // the second when changeInfo.status is "complete". We only need to
-    // react to the first.
-    if (changeInfo.url) {
+    // react to the first. If we are only reacting to exact URL matches in
+    // this tab then stop listening if the URL has changed.
+    if (exactMatchTabIds[tabId] && changeInfo.url) {
         // In this case, the user went to a new URL in the same tab. We
         // should stop listening.
         stopListening(tabId);
