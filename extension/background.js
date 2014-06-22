@@ -56,33 +56,20 @@ function startListening(tabId) {
     console.log('Will start reloading tab', tabId, 'on relevant Vim events.');
 }
 
-chrome.runtime.onMessage.addListener(function(message, sender, callback) {
-    chrome.tabs.query({currentWindow: true, active: true}, function(tabs) {
-        var tabId = tabs[0].id;
-        if (message.action === 'toggle-listen') {
-            if (listeningTabIds[tabId]) {
-                stopListening(tabId);
-            } else {
-                startListening(tabId);
-            }
-        } else if (message.action === 'toggle-url-matching') {
-            exactMatchTabIds[tabId] = !exactMatchTabIds[tabId];
-            console.log('Will', exactMatchTabIds[tabId] ? 'start' : 'stop', 'reloading only when URL is the same');
-        }
-    });
+chrome.browserAction.onClicked.addListener(function(tab) {
+    var tabId = tab.id;
+    if (listeningTabIds[tabId]) {
+        stopListening(tabId);
+    } else {
+        startListening(tabId);
+    }
 });
 
 chrome.tabs.onUpdated.addListener(function(tabId, changeInfo, tab) {
     // This gets fired twice, first where changeInfo.status is "loading" and
     // the second when changeInfo.status is "complete". We only need to
-    // react to the first. If we are only reacting to exact URL matches in
-    // this tab then stop listening if the URL has changed.
-    if (exactMatchTabIds[tabId] && changeInfo.url) {
-        // In this case, the user went to a new URL in the same tab. We
-        // should stop listening.
-        stopListening(tabId);
-    } else if (changeInfo.status === 'loading' && listeningTabIds[tabId]) {
-        console.log('user refreshed a listened-for tab');
+    // react to the first.
+    if (changeInfo.status === 'loading' && listeningTabIds[tabId]) {
         startListening(tabId);
     }
 });
