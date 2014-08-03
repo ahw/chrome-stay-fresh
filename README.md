@@ -53,3 +53,22 @@ and issue or message me directly if you'd like help.
    right place.
 5. Restart Chrome
 6. Re-load the extension from `chrome://extensions`.
+
+Usage
+-----
+After a successful installation you should see an icon like this in Chrome's
+extension button area (upper right):  <img style="text-align:center; width:19px; margin:auto;" src="https://raw.githubusercontent.com/ahw/chrome-stay-fresh/master/extension/images/v-white-19.png"/>
+
+When you click it, the icon should change to the this: <img src="https://raw.githubusercontent.com/ahw/chrome-stay-fresh/master/extension/images/v-pink-19.png"/>
+
+Clicking the icon will toggle whether or not Chrome reloads that particular
+tab when `GET /reload` requests are made to `localhost` on port 7700. When
+the icon has the pink border that means the tab will automatically reload
+whenever such a request is made. If you've installed [vim-stay-fresh](https://github.com/ahw/vim-stay-fresh)
+you should be able to open up a file in Vim on `localhost` and issue
+`:w` in order to trigger a reload of all the actively-listening tabs. If
+you've installed [vim-hooks](https://github.com/ahw/vim-hooks) you can just
+include basic `curl localhost:7700/reload` commands after any other
+arbitrary scripting work you want to do. The VimHooks plugin also supports
+responding to other events other than `BufWritePost`, which is the only
+event **vim-stay-fresh** listens to.
