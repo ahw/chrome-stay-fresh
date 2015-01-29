@@ -72,3 +72,23 @@ include basic `curl localhost:7700/reload` commands after any other
 arbitrary scripting work you want to do. The VimHooks plugin also supports
 responding to other events other than `BufWritePost`, which is the only
 event **vim-stay-fresh** listens to.
+
+Known Issues
+============
+After upgrading to Yosemite I had trouble running `curl localhost:7700/reload`. Seems `curl` was attempting to contact `localhost` using IPv6 (see [this StackOverflow post](http://stackoverflow.com/questions/22952676/curl-failed-to-connect-to-localhost-port-80)). I had to adjust my `/etc/hosts` file as follows:
+
+```bash
+##
+# Host Database
+#
+# localhost is used to configure the loopback interface
+# when the system is booting.  Do not change this entry.
+##
+127.0.0.1	localhost
+255.255.255.255	broadcasthost
+
+# Commented out the following two lines in order
+# to get curl localhost:7700 working again.
+# ::1             localhost
+# fe80::1%lo0	localhost
+```
